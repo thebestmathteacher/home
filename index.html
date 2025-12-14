@@ -14,6 +14,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 120px; /* ন্যাববারের উচ্চতা অনুযায়ী এডজাস্ট করা হয়েছে */
+    }
     :root {
       --primary: #2563eb;       
       --primary-dark: #1e40af;
@@ -1491,36 +1495,37 @@
     #myBtn {
       display: none; /* শুরুতে লুকানো */
       position: fixed;
-      bottom: 30px; /* নিচ থেকে দূরত্ব */
-      left: 30px;   /* বাম পাশ থেকে দূরত্ব (আগে ডান পাশে ছিল) */
-      z-index: 999; 
+      bottom: 30px; 
+      left: 30px;   
+      
+      /* পরিবর্তন: z-index কমিয়ে ৯৯০ করা হলো যাতে পপ-আপের নিচে থাকে */
+      z-index: 990; 
+      
       border: none;
       outline: none;
-      background-color: var(--secondary); /* কালো/নেভি কালার */
+      background-color: var(--secondary); 
       color: white;
       cursor: pointer;
       padding: 0;
-      width: 50px;  /* গোল শেপ */
+      width: 50px;  
       height: 50px;
       border-radius: 50%;
       font-size: 20px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       transition: 0.3s;
+      
+      /* আইকন মাঝখানে রাখার জন্য */
+      display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* আইকন মাঝখানে রাখার জন্য */
-    #myBtn i {
-      line-height: 50px; 
-    }
-
     #myBtn:hover {
-      background-color: var(--primary); /* হোভার করলে নীল হবে */
+      background-color: var(--primary); 
       transform: translateY(-5px);
     }
-    
-    /* মোবাইলের জন্য বাটনটি একটু উপরে থাকবে */
+
+    /* মোবাইলের জন্য পজিশন */
     @media (max-width: 768px) {
       #myBtn {
         bottom: 80px; /* স্টিকি বারের উপরে */
@@ -1528,9 +1533,6 @@
         width: 45px;
         height: 45px;
         font-size: 18px;
-      }
-      #myBtn i {
-        line-height: 45px;
       }
     }
   </style>
@@ -2325,7 +2327,7 @@
         <p style="color: #15803d; margin-bottom: 20px;">আপনার ক্লাসের শিটটি রেডি। নিচের বাটনে ক্লিক করুন।</p>
         
         <a id="dynamic-pdf-link" href="#" target="_blank" class="btn" style="background: #2563eb; padding: 12px 35px; border-radius: 50px; font-size: 1.2rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);">
-          <i class="fa-solid fa-file-arrow-down"></i> এখনই ডাউনলোড করুন
+          এখনই ডাউনলোড করুন
         </a>
         
         <div class="cta-animated-box">
@@ -2334,7 +2336,7 @@
            </p>
            
            <a href="tel:+8801639498196" class="btn" style="background: #ef4444; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-weight: bold; padding: 10px 25px; border-radius: 10px;">
-             <i class="fa-solid fa-phone-volume"></i> সরাসরি কল করুন: 01639-498196
+              সরাসরি কল করুন
            </a>
         </div>
       </div>
@@ -3114,12 +3116,14 @@
     // বাটনটি ধরলাম
     let mybutton = document.getElementById("myBtn");
 
-    // ইউজার ২০px স্ক্রল করলেই বাটন দেখাবে
+    // ইউজার স্ক্রল করলে এই ফাংশন কল হবে
     window.onscroll = function() {scrollFunction()};
 
     function scrollFunction() {
-      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        mybutton.style.display = "block";
+      // আগে এখানে 300 ছিল, এখন 700 করে দেওয়া হলো
+      // এর মানে ইউজার ৭০০ পিক্সেল নিচে নামলে তবেই বাটন দেখা যাবে
+      if (document.body.scrollTop > 700 || document.documentElement.scrollTop > 700) {
+        mybutton.style.display = "flex"; // flex ব্যবহার করলে আইকন ঠিক মাঝখানে থাকবে
       } else {
         mybutton.style.display = "none";
       }
